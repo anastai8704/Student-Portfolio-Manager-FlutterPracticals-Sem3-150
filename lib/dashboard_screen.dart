@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatelessWidget {
-  DashboardScreen({super.key});
+class DashboardScreen extends StatelessWidget { 
+  const DashboardScreen({super.key});
 
-  final List<String> menu = [
-    "Profile",
-    "Education",
-    "Skills",
-    "Certificates",
-    "Projects",
-    "Achievements",
-  ];
+  final List<String> menu = const [
+  "Profile",
+  "Education",
+  "Skills",
+  "Certificates",
+  "Projects",
+  "Achievements",
+];
 
-  final List<String> activity = [
-    "Added Flutter Certification",
-    "Updated Profile",
-    "Added New Project",
-  ];
+final List<String> activity = const [
+  "Added Flutter Certification",
+  "Updated Profile",
+  "Added New Project",
+];
 
   @override
   Widget build(BuildContext context) {
