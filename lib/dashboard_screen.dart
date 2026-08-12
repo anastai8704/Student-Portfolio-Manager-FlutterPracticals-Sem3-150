@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'registration_screen.dart';
 
 class DashboardScreen extends StatelessWidget { 
   const DashboardScreen({super.key});
@@ -57,10 +58,22 @@ final List<String> activity = const [
               mainAxisSpacing: 10,
               children: menu.map((e) {
                 return Card(
-                  child: Center(
-                    child: Text(e),
-                  ),
-                );
+  child: InkWell(
+    onTap: e == "Profile"
+        ? () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RegistrationScreen(),
+              ),
+            );
+          }
+        : null,
+    child: Center(
+      child: Text(e),
+    ),
+  ),
+);
               }).toList(),
             ),
 
