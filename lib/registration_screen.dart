@@ -20,10 +20,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String result = "";
 
   void register() {
-    if (name.text.isEmpty || email.text.isEmpty || mobile.text.isEmpty) {
-      setState(() => result = "Please fill all required fields");
+    if (name.text.isEmpty ||
+        email.text.isEmpty ||
+        mobile.text.isEmpty) {
+      setState(() {
+        result = "Please fill all required fields";
+      });
       return;
     }
+
+    if (!email.text.contains("@") || mobile.text.length != 10) {
+      setState(() {
+        result = "Please enter valid email and mobile number";
+      });
+      return;
+    }
+
+    String skills = "";
+    if (flutter) skills += "Flutter ";
+    if (java) skills += "Java ";
+    if (python) skills += "Python ";
+    if (sql) skills += "SQL ";
 
     setState(() {
       result = "Registration Successful\n"
@@ -32,6 +49,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           "Mobile: ${mobile.text}\n"
           "Gender: $gender\n"
           "Course: $course\n"
+          "Skills: $skills\n"
           "Experience: ${experience.toInt()} years\n"
           "Internship: ${internship ? "Yes" : "No"}";
     });
@@ -46,7 +64,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       gender = "Male";
       course = "MCA";
       experience = 0;
-      flutter = java = python = sql = false;
+      flutter = false;
+      java = false;
+      python = false;
+      sql = false;
       internship = false;
       result = "";
     });
@@ -55,7 +76,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Registration")),
+      appBar: AppBar(
+        title: const Text("Registration"),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -72,8 +95,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               controller: mobile,
               decoration: const InputDecoration(labelText: "Mobile Number"),
             ),
-
-            const SizedBox(height: 10),
 
             Row(
               children: [
@@ -96,7 +117,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             DropdownButton(
               value: course,
               items: ["MCA", "BCA", "MBA"].map((c) {
-                return DropdownMenuItem(value: c, child: Text(c));
+                return DropdownMenuItem(
+                  value: c,
+                  child: Text(c),
+                );
               }).toList(),
               onChanged: (v) => setState(() => course = v!),
             ),
@@ -123,14 +147,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
 
             const Text("Experience Level"),
+
             Slider(
-              value: experience,
-              min: 0,
-              max: 5,
-              divisions: 5,
-              label: "$experience years",
-              onChanged: (v) => setState(() => experience = v),
-            ),
+  value: experience,
+  min: 0,
+  max: 5,
+  divisions: 5,
+  label: "${experience.toInt()} years",
+  onChanged: (v) {
+    setState(() {
+      experience = v;
+    });
+  },
+),
 
             SwitchListTile(
               title: const Text("Available for Internship"),
@@ -156,11 +185,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 15),
 
             GestureDetector(
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Student Registration")),
-                );
-              },
+              onTap: () {},
               child: Text(
                 result,
                 style: const TextStyle(fontSize: 16),
