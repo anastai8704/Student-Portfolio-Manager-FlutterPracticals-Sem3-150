@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registration_screen.dart';
+import 'student_screen.dart';
 
 class DashboardScreen extends StatelessWidget { 
   const DashboardScreen({super.key});
@@ -57,7 +58,7 @@ final List<String> activity = const [
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               children: menu.map((e) {
-                return Card(
+return Card(
   child: InkWell(
     onTap: e == "Profile"
         ? () {
@@ -68,7 +69,16 @@ final List<String> activity = const [
               ),
             );
           }
-        : null,
+        : e == "Education"
+            ? () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StudentScreen(),
+                  ),
+                );
+              }
+            : null,
     child: Center(
       child: Text(e),
     ),
